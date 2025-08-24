@@ -20,7 +20,7 @@ public class Medico {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     private String nome;
-    //adicionar neste campo a especialidade do medico
+    private Especialidade especialidade;
     private String crm;
     private String telefone;
     private String email;
