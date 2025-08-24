@@ -25,6 +25,6 @@ public class Paciente {
     private String cpf;
     private String telefone;
     private String email;
-    private String password;
+    private String senha;
     private String endereco;
 }
