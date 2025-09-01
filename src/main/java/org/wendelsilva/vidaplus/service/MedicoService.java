@@ -7,6 +7,8 @@ import org.wendelsilva.vidaplus.dto.response.MedicoResponseDTO;
 import org.wendelsilva.vidaplus.model.Medico;
 import org.wendelsilva.vidaplus.repository.MedicoRepository;
 
+import java.util.UUID;
+
 @Service
 public class MedicoService {
 
@@ -28,8 +30,8 @@ public class MedicoService {
         return medicoRepository.save(medico);
     }
 
-    public MedicoResponseDTO getMedicoById(MedicoRequestDTO medicoRequestDTO) {
-        return medicoRepository.findById(medicoRequestDTO.id()).map(MedicoResponseDTO::new)
+    public MedicoResponseDTO getMedicoById(UUID id) {
+        return medicoRepository.findById(id).map(MedicoResponseDTO::new)
                 .orElseThrow(() -> new RuntimeException("Médico não encontrado."));
     }
 

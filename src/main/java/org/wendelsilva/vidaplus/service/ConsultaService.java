@@ -4,12 +4,15 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wendelsilva.vidaplus.dto.request.ConsultaRequestDTO;
+import org.wendelsilva.vidaplus.dto.response.ConsultaResponseDTO;
 import org.wendelsilva.vidaplus.model.Consulta;
 import org.wendelsilva.vidaplus.model.Medico;
 import org.wendelsilva.vidaplus.model.Paciente;
 import org.wendelsilva.vidaplus.repository.ConsultaRepository;
 import org.wendelsilva.vidaplus.repository.MedicoRepository;
 import org.wendelsilva.vidaplus.repository.PacienteRepository;
+
+import java.util.UUID;
 
 @Service
 public class ConsultaService {
@@ -41,4 +44,17 @@ public class ConsultaService {
         consulta.setMedico(medico);
         return consultaRepository.save(consulta);
     }
+
+    public ConsultaResponseDTO getConsultaById(UUID id) {
+        return consultaRepository.findById(id).map(ConsultaResponseDTO::new)
+                .orElseThrow(() -> new RuntimeException("Consulta não encontrada."));
+    }
+
+    public void deleteConsultaById(UUID id) {
+        if (!consultaRepository.existsById(id)) {
+            throw new EntityNotFoundException("Consulta não encontrada.");
+        }
+        consultaRepository.deleteById(id);
+    }
+
 }

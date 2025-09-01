@@ -4,8 +4,11 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wendelsilva.vidaplus.dto.request.PacienteRequestDTO;
+import org.wendelsilva.vidaplus.dto.response.PacienteResponseDTO;
 import org.wendelsilva.vidaplus.model.Paciente;
 import org.wendelsilva.vidaplus.repository.PacienteRepository;
+
+import java.util.UUID;
 
 @Service
 public class PacienteService {
@@ -30,12 +33,12 @@ public class PacienteService {
         return pacienteRepository.save(paciente);
     }
 
-    public Paciente getPacienteById(java.util.UUID id) {
-        return pacienteRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado."));
+    public PacienteResponseDTO getPacienteById(UUID id) {
+        return pacienteRepository.findById(id).map(PacienteResponseDTO::new)
+                .orElseThrow(() -> new RuntimeException("Paciente não encontrado."));
     }
 
-    public void deletePacienteById(java.util.UUID id) {
+    public void deletePacienteById(UUID id) {
         if (!pacienteRepository.existsById(id)) {
             throw new EntityNotFoundException("Paciente não encontrado.");
         }

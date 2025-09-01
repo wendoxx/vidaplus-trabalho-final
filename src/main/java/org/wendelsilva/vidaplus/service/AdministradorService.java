@@ -7,6 +7,8 @@ import org.wendelsilva.vidaplus.dto.response.AdministradorResponseDTO;
 import org.wendelsilva.vidaplus.model.Administrador;
 import org.wendelsilva.vidaplus.repository.AdministradorRepository;
 
+import java.util.UUID;
+
 @Service
 public class AdministradorService {
 
@@ -27,8 +29,8 @@ public class AdministradorService {
         return administradorRepository.save(administrador);
     }
 
-    public AdministradorResponseDTO getAdministradorById(AdministradorRequestDTO administradorRequestDTO) {
-        return administradorRepository.findById(administradorRequestDTO.id()).map( AdministradorResponseDTO::new).orElseThrow( () -> new RuntimeException("Administrador not found"));
+    public AdministradorResponseDTO getAdministradorById(UUID id) {
+        return administradorRepository.findById(id).map( AdministradorResponseDTO::new).orElseThrow( () -> new RuntimeException("Administrador not found"));
     }
 
     public void deleteAdministradorById(java.util.UUID id) {
