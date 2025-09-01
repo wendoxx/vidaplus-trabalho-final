@@ -28,7 +28,6 @@ public class Paciente implements Serializable {
     private String cpf;
     private String telefone;
     private String email;
-    private String senha;
     private String endereco;
     @OneToMany(mappedBy = "paciente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Consulta> consultas;

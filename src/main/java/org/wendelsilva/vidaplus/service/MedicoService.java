@@ -27,6 +27,7 @@ public class MedicoService {
         medico.setEmail(medicoRequestDTO.email());
         medico.setTelefone(medicoRequestDTO.telefone());
         medico.setSenha(medicoRequestDTO.senha());
+        medico.setCrm(medicoRequestDTO.crm());
         return medicoRepository.save(medico);
     }
 

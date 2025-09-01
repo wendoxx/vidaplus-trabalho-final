@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wendelsilva.vidaplus.dto.request.PacienteRequestDTO;
 import org.wendelsilva.vidaplus.dto.response.PacienteResponseDTO;
+import org.wendelsilva.vidaplus.model.Consulta;
 import org.wendelsilva.vidaplus.model.Paciente;
 import org.wendelsilva.vidaplus.repository.PacienteRepository;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -28,7 +30,6 @@ public class PacienteService {
         paciente.setCpf(pacienteRequestDTO.cpf());
         paciente.setTelefone(pacienteRequestDTO.telefone());
         paciente.setEmail(pacienteRequestDTO.email());
-        paciente.setSenha(pacienteRequestDTO.senha());
         paciente.setEndereco(pacienteRequestDTO.endereco());
         return pacienteRepository.save(paciente);
     }
@@ -36,6 +37,12 @@ public class PacienteService {
     public PacienteResponseDTO getPacienteById(UUID id) {
         return pacienteRepository.findById(id).map(PacienteResponseDTO::new)
                 .orElseThrow(() -> new RuntimeException("Paciente não encontrado."));
+    }
+
+    public Set<Consulta> getConsultasByPacienteId(UUID pacienteId) {
+        Paciente paciente = pacienteRepository.findById(pacienteId)
+                .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado."));
+        return paciente.getConsultas();
     }
 
     public void deletePacienteById(UUID id) {
