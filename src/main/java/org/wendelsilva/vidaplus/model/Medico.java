@@ -1,5 +1,6 @@
 package org.wendelsilva.vidaplus.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +29,7 @@ public class Medico implements Serializable {
     private String telefone;
     private String email;
     private String senha;
+    @JsonManagedReference
     @OneToMany(mappedBy = "medico", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Consulta> consultas;
 }

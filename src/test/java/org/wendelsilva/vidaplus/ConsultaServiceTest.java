@@ -8,9 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.wendelsilva.vidaplus.dto.request.ConsultaRequestDTO;
-import org.wendelsilva.vidaplus.model.Consulta;
-import org.wendelsilva.vidaplus.model.Medico;
-import org.wendelsilva.vidaplus.model.Paciente;
+import org.wendelsilva.vidaplus.model.*;
 import org.wendelsilva.vidaplus.repository.ConsultaRepository;
 import org.wendelsilva.vidaplus.repository.MedicoRepository;
 import org.wendelsilva.vidaplus.repository.PacienteRepository;
@@ -62,7 +60,8 @@ public class ConsultaServiceTest {
                 medico.getId(),
                 LocalDateTime.now(),
                 "Consulta de rotina",
-                "AGENDADA"
+                ConsultaStatus.REMARCADA,
+                ConsultaTipo.PRESENCIAL
         );
     }
 

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.wendelsilva.vidaplus.dto.request.ConsultaRequestDTO;
 import org.wendelsilva.vidaplus.dto.response.ConsultaResponseDTO;
 import org.wendelsilva.vidaplus.model.Consulta;
+import org.wendelsilva.vidaplus.model.ConsultaStatus;
 import org.wendelsilva.vidaplus.model.Medico;
 import org.wendelsilva.vidaplus.model.Paciente;
 import org.wendelsilva.vidaplus.repository.ConsultaRepository;
@@ -42,6 +43,9 @@ public class ConsultaService {
         consulta.setDataHora(consultaRequestDTO.dataHora());
         consulta.setPaciente(paciente);
         consulta.setMedico(medico);
+        consulta.setMotivo(consultaRequestDTO.motivo());
+        consulta.setStatus(consultaRequestDTO.status());
+        consulta.setTipo(consultaRequestDTO.tipo());
         return consultaRepository.save(consulta);
     }
 
