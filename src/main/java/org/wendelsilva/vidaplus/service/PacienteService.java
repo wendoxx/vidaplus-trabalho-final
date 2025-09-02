@@ -2,6 +2,7 @@ package org.wendelsilva.vidaplus.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.wendelsilva.vidaplus.dto.request.PacienteRequestDTO;
 import org.wendelsilva.vidaplus.dto.response.PacienteResponseDTO;
@@ -17,6 +18,8 @@ public class PacienteService {
 
     @Autowired
     private PacienteRepository pacienteRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public Paciente createAndUpdatePaciente(PacienteRequestDTO pacienteRequestDTO) {
         Paciente paciente;
@@ -25,11 +28,13 @@ public class PacienteService {
         } else {
             paciente = new Paciente();
         }
+        String senhaCriptografada = passwordEncoder.encode(pacienteRequestDTO.senha());
         paciente.setNome(pacienteRequestDTO.nome());
         paciente.setDataNascimento(pacienteRequestDTO.dataNascimento());
         paciente.setCpf(pacienteRequestDTO.cpf());
         paciente.setTelefone(pacienteRequestDTO.telefone());
         paciente.setEmail(pacienteRequestDTO.email());
+        paciente.setSenha(senhaCriptografada);
         paciente.setEndereco(pacienteRequestDTO.endereco());
         return pacienteRepository.save(paciente);
     }

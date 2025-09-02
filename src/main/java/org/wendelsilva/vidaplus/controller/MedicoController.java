@@ -22,11 +22,6 @@ public class MedicoController {
         return ResponseEntity.ok(medicoService.getMedicoById(id));
     }
 
-    @PostMapping
-    public ResponseEntity<Medico> createMedico(@RequestBody MedicoRequestDTO medicoRequestDTO) {
-        return ResponseEntity.status(201).body(medicoService.createAndUpdateMedico(medicoRequestDTO));
-    }
-
     @PutMapping
     public ResponseEntity<Medico> updateMedico(@RequestBody MedicoRequestDTO medicoRequestDTO) {
         return ResponseEntity.status(201).body(medicoService.createAndUpdateMedico(medicoRequestDTO));

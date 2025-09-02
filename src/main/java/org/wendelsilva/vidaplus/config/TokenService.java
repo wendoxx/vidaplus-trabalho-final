@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.wendelsilva.vidaplus.model.Usuario;
 
@@ -22,7 +23,7 @@ public class TokenService {
     @Value("${api.jwt.private.key}")
     RSAPrivateKey privateKey;
 
-    public String generateToken(Usuario user) {
+    public String generateToken(UserDetails user) {
         try {
             Algorithm algorithm = Algorithm.RSA256(publicKey, privateKey);
             return JWT.create()

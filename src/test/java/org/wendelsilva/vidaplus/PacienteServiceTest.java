@@ -45,6 +45,7 @@ public class PacienteServiceTest {
                 "123.456.789-00",
                 "11999998888",
                 "joao@email.com",
+                "senha123",
                 "Rua Teste, 123"
         );
     }

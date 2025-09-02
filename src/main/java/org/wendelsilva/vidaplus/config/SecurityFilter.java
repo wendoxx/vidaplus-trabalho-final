@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.wendelsilva.vidaplus.repository.UsuarioRepository;
@@ -21,7 +22,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     TokenService tokenService;
 
     @Autowired
-    UsuarioRepository usuarioRepository;
+    UserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -29,8 +30,8 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if(token != null) {
             var email = tokenService.validateToken(token);
-            UserDetails usuario = usuarioRepository.findByEmail(email);
-            var authentication =  new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+            var authentication =  new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(request, response);

@@ -29,10 +29,6 @@ public class PacienteController {
         return ResponseEntity.ok(pacienteService.getConsultasByPacienteId(id));
     }
 
-    @PostMapping
-    public ResponseEntity<Paciente> createPaciente(@RequestBody PacienteRequestDTO pacienteRequestDTO){
-        return ResponseEntity.status(201).body(pacienteService.createAndUpdatePaciente(pacienteRequestDTO));
-    }
 
     @PutMapping
     public ResponseEntity<Paciente> updatePaciente(@RequestBody PacienteRequestDTO pacienteRequestDTO) {

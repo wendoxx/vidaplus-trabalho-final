@@ -1,6 +1,7 @@
 package org.wendelsilva.vidaplus.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.wendelsilva.vidaplus.dto.request.MedicoRequestDTO;
 import org.wendelsilva.vidaplus.dto.response.MedicoResponseDTO;
@@ -15,6 +16,9 @@ public class MedicoService {
     @Autowired
     private MedicoRepository medicoRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public Medico createAndUpdateMedico(MedicoRequestDTO medicoRequestDTO) {
         Medico medico;
         if (medicoRequestDTO.id() != null && medicoRepository.existsById(medicoRequestDTO.id())) {
@@ -22,11 +26,13 @@ public class MedicoService {
         } else {
             medico = new Medico();
         }
+
+        String senhaCriptografada = passwordEncoder.encode(medicoRequestDTO.senha());
         medico.setNome(medicoRequestDTO.nome());
         medico.setEspecialidade(medicoRequestDTO.especialidade());
         medico.setEmail(medicoRequestDTO.email());
         medico.setTelefone(medicoRequestDTO.telefone());
-        medico.setSenha(medicoRequestDTO.senha());
+        medico.setSenha(senhaCriptografada);
         medico.setCrm(medicoRequestDTO.crm());
         return medicoRepository.save(medico);
     }
